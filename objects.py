@@ -195,7 +195,7 @@ class Music:
         self.currently_playing = start_song
         self.index = -1
         self.songs = songs
-        self.volume = .5
+        self.volume = .3
         self.shuffle_songs()
         pygame.mixer.music.load(self.currently_playing)
         # pygame.mixer.music.set_volume(self.volume)

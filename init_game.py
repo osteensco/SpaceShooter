@@ -34,7 +34,7 @@ def load_image(folder, image_name):
     image = image.convert_alpha()
     return image
 
-def load_sound(folder, sound_name, vol=.5):
+def load_sound(folder, sound_name, vol=.1):
     sound = pygame.mixer.Sound(os.path.join(folder, sound_name))
     sound.set_volume(vol)
     return sound
@@ -167,10 +167,22 @@ songs = [song1, song2, song3, song4, song5, song6]
 explosion_sound1 = load_sound("soundfx and music", "explosion1.wav", vol=.8)
 explosion_sound2 = load_sound("soundfx and music", "explosion2.wav", vol=.8)
 explosion_sound3 = load_sound("soundfx and music", "explosion3.wav", vol=1)
-laser_player_sound = load_sound("soundfx and music", "laser_player.wav", vol=.5)
+laser_player_sound = load_sound("soundfx and music", "laser_player.wav", vol=.2)
 laser_boss_sound = load_sound("soundfx and music", "laser_boss.wav", vol=.2)
 laser_sound = load_sound("soundfx and music", "laser.wav")
 drop_effect_sound = load_sound("soundfx and music", "drop_effect.wav")
 shield_hit_sound = load_sound("soundfx and music", "shield_hit_sound.wav")
 shield_down_sound = load_sound("soundfx and music", "shield_down_sound.wav")
 reflect_sound = load_sound("soundfx and music", "reflect_sound.wav")
+sound_objects = [
+    explosion_sound1, 
+    explosion_sound2, 
+    explosion_sound3, 
+    laser_player_sound, 
+    laser_boss_sound,
+    laser_sound,
+    drop_effect_sound, 
+    shield_hit_sound, 
+    shield_down_sound, 
+    reflect_sound
+    ]

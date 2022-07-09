@@ -127,3 +127,8 @@ MUSIC_SETTINGS = {
     'On': True,
     'Off': False
 }
+
+SOUND_SETTINGS = {
+    'On': True,
+    'Off': False
+}

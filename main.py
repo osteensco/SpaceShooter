@@ -24,13 +24,40 @@ from init_game import (
     button_settings,
     button_credits,
     button_menu,
-    button_default_settings
-
+    button_default_settings,
+    sound_objects
 )
 
-from helper_functions import dyn_background, collide, butterfly_shoot
-from class_dictionaries import COLOR_MAP, BOSS_COLOR_MAP, BOSS_WEAPON_MAP, CONTROL_SETTINGS_DEFAULT, DIFFICULTY_SETTINGS, FPS_SETTINGS, MUSIC_SETTINGS
-from objects import Background, Setting, ControlSetting, Button, Music, Player, Boss, Enemy, Ship, Explosion, Spark
+from helper_functions import (
+    dyn_background, 
+    collide, 
+    butterfly_shoot
+)
+
+from class_dictionaries import (
+    COLOR_MAP, 
+    BOSS_COLOR_MAP, 
+    BOSS_WEAPON_MAP, 
+    CONTROL_SETTINGS_DEFAULT, 
+    DIFFICULTY_SETTINGS, 
+    FPS_SETTINGS, 
+    MUSIC_SETTINGS,
+    SOUND_SETTINGS
+)
+    
+from objects import (
+    Background, 
+    Setting, 
+    ControlSetting, 
+    Button, 
+    Music, 
+    Player, 
+    Boss, 
+    Enemy, 
+    Ship, 
+    Explosion, 
+    Spark
+)
 
 
 
@@ -527,6 +554,9 @@ class Settings(Menu):
         self.music_options = MUSIC_SETTINGS
         self.music = Setting(self.generalposx, self.yspacing(3), "Music: ", self.music_options, 'On')
         
+        self.sound_options = SOUND_SETTINGS
+        self.sound = Setting(self.generalposx, self.yspacing(4), "Sound: ", self.sound_options, 'On')
+
         self.defaultcontrols = CONTROL_SETTINGS_DEFAULT
         self.controls = self.defaultcontrols.copy()
         self.controlsettings = self.create_control_labels()
@@ -534,7 +564,7 @@ class Settings(Menu):
         self.apply_default = Button(175, HEIGHT-115, button_default_settings)
         self.buttons = [self.menu_button, self.apply_default]
         self.labels = [(self.title, self.titlexy), (self.general_label, self.general_labelxy), (self.controls_label, self.controls_labelxy)]
-        self.all = [self.difficulty, self.fps, self.music]
+        self.all = [self.difficulty, self.fps, self.music, self.sound]
 
     def create_control_labels(self):
         controlsettings = []
@@ -562,6 +592,9 @@ class Settings(Menu):
         if self.music.selected[0] == 'Off':
             self.music.select('On')
             self.parent.music.play()
+        if self.sound.selected[0] == 'Off':
+            self.sound.select('On')
+            self.parent.sound_on()
         self.controls = self.defaultcontrols.copy()
         self.controlsettings = self.create_control_labels()
 
@@ -590,6 +623,11 @@ class Settings(Menu):
                                     self.parent.music.play()
                                 else:
                                     self.parent.music.stop()
+                            elif setting is self.sound:
+                                if option == 'On':
+                                    self.parent.sound_on()
+                                else:
+                                    self.parent.sound_off()
             for control in self.controlsettings:
                 control.track_events(event)
 
@@ -660,11 +698,20 @@ class App:
         self.music = Music()
         self.MUSIC_END = pygame.USEREVENT+1
         pygame.mixer.music.set_endevent(self.MUSIC_END)
+        self.sounds = sound_objects
         self.main_menu = Menu(self)#starts game at main menu when game is opened
         self.settings = Settings(self)
         self.credits = Credits(self)
         self.game = None
         self.main_menu.run()
+
+    def sound_on(self):
+        for sound in self.sounds:
+            sound.set_volume(0.2)
+
+    def sound_off(self):
+        for sound in self.sounds:
+            sound.set_volume(0.0)
 
     def newgame(self):
         self.game = GameSession(self)
