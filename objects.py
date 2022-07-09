@@ -107,7 +107,7 @@ class ControlSetting:
         self.key = self.items[1]
         self.keylabel = self.items[2]
         self.control_label = self.items[3]
-        self.input = InputBox(self, self.xspacing(), self.y - 5, self.keylabel)
+        self.input = InputBox(self, self.xspacing()-3, self.y, self.keylabel)
         self.update = False
 
     def variables(self):
@@ -130,13 +130,13 @@ class ControlSetting:
 
 class InputBox:
     def __init__(self, parent, x, y, text=''):
-        self.x = x
-        self.y = y
+        self.x = x-5
+        self.y = y-5
         self.parent = parent
         self.text = text
         self.txt_surface = settings_font.render(self.text, 1, (255,255,255))
-        self.w = self.get_width()
-        self.h = 30
+        self.w = self.get_width()+10
+        self.h = self.get_height()+10
         self.rect = pygame.Rect(x, y, self.w, self.h)
         self.active = False
 
@@ -145,7 +145,14 @@ class InputBox:
         if w < 5:
             return 5
         else:
-            return w + 10
+            return w + 2
+
+    def get_height(self):
+        h = self.txt_surface.get_height()
+        if h < 5:
+            return 5
+        else:
+            return h + 2
 
     def track_events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -175,8 +182,12 @@ class InputBox:
 
 
     def draw(self, window):
-        window.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
-        pygame.draw.rect(window, (255,255,255), self.rect, 2)
+        if self.active:
+            color = (255,0,0)
+        else:
+            color = (255,255,255)
+        window.blit(self.txt_surface, (self.rect.x+5, self.rect.y))
+        pygame.draw.rect(window, color, self.rect, 2)
 
 
 class Music:

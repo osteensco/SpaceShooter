@@ -10,15 +10,15 @@ WIDTH, HEIGHT = 1080, 650
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Defense")
 
-main_font = pygame.font.SysFont("comicsans", 50)
-settings_font = pygame.font.SysFont("comicsans", 30)
+main_font = pygame.font.SysFont("comicsans", 30)
+settings_font = pygame.font.SysFont("comicsans", 20)
 lost_font = pygame.font.SysFont("comicsans", 100)
 title_font = pygame.font.SysFont("comicsans", 100)
 credits_font = pygame.font.SysFont("comicsans", 17)
 
 
 # variables
-set_FPS = 90#handle all variables like this so that they can be adjusted in settings menu?
+set_FPS = 60#handle all variables like this so that they can be adjusted in settings menu?
 scroll_vel = 2
 shield_base_time = 3
 enemy_vel = 1

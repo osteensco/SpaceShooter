@@ -448,14 +448,14 @@ class Menu:
         self.parent = app
         self.running = False
         self.scroll_vel = scroll_vel/20
-        self.label = title_font.render("SPACE DEFENSE!", 1, (255,255,255))
-        self.labelxy = (WIDTH/2 - self.label.get_width()/2, self.label.get_height()/2)
-        self.play_button = Button(WIDTH/2 - button_play.get_width()/2, (HEIGHT/2) - (button_play.get_height()*1.5), button_play)
-        self.settings_button = Button(WIDTH/2 - button_settings.get_width()/2, (HEIGHT/2) - (button_settings.get_height()/2) , button_settings)
-        self.credits_button = Button(WIDTH/2 - button_credits.get_width()/2, (HEIGHT/2) + (button_credits.get_height()/2), button_credits)
+        self.title = title_font.render("SPACE DEFENSE!", 1, (255,255,255))
+        self.titlexy = (WIDTH/2 - self.title.get_width()/2, self.title.get_height()/20)
+        self.play_button = Button(WIDTH/2 - button_play.get_width()/2, (self.titlexy[1]*2) + self.title.get_height(), button_play)
+        self.settings_button = Button(WIDTH/2 - button_settings.get_width()/2, (HEIGHT/2) + (button_play.get_height()/2), button_settings)
+        self.credits_button = Button(WIDTH/2 - button_credits.get_width()/2, (HEIGHT/2) + (button_settings.get_height()/2) + (button_play.get_height()/2), button_credits)
         self.menu_button = Button(15, HEIGHT-115, button_menu)
         self.buttons = [self.play_button, self.settings_button, self.credits_button]
-        self.labels = [(self.label, self.labelxy)]
+        self.labels = [(self.title, self.titlexy)]
         self.bgs = bgs
 
     def run(self):
@@ -494,13 +494,13 @@ class Menu:
                 if self.settings_button.click(mouse):
                     self.nav_settings()
                 if self.credits_button.click(mouse):
-                    self.nav_view_scores()
+                    self.nav_credits()
 
     def nav_settings(self):
         self.running = False
         self.parent.settings.run()
 
-    def nav_view_scores(self):
+    def nav_credits(self):
         self.running = False
         self.parent.credits.run()
         
@@ -509,13 +509,13 @@ class Menu:
 class Settings(Menu):
     def __init__(self, app) -> None:
         super().__init__(app)
-        self.label = title_font.render("SETTINGS", 1, (255,255,255))
-        self.labelxy = (WIDTH/2 - self.label.get_width()/2, self.label.get_height()/2)
+        self.title = title_font.render("SETTINGS", 1, (255,255,255))
+        self.titlexy = (WIDTH/2 - self.title.get_width()/2, self.title.get_height()/20)
         self.general_label = main_font.render("General", 1, (255,255,255))
-        self.general_labelxy = (WIDTH/4 - self.general_label.get_width()/2, self.labelxy[1]+self.label.get_height()+10)
+        self.general_labelxy = (WIDTH/4 - self.general_label.get_width()/2, self.titlexy[1]+self.title.get_height()+10)
         self.generalposx = self.general_labelxy[0] - self.general_label.get_width()*.75
         self.controls_label = main_font.render("Controls", 1, (255,255,255))
-        self.controls_labelxy = (WIDTH - WIDTH/4 - self.controls_label.get_width()/2, self.labelxy[1]+self.label.get_height()+10)
+        self.controls_labelxy = (WIDTH - WIDTH/4 - self.controls_label.get_width()/2, self.titlexy[1]+self.title.get_height()+10)
         self.controlsposx = self.controls_labelxy[0]
 
         self.fps_options = FPS_SETTINGS
@@ -533,7 +533,7 @@ class Settings(Menu):
 
         self.apply_default = Button(175, HEIGHT-115, button_default_settings)
         self.buttons = [self.menu_button, self.apply_default]
-        self.labels = [(self.label, self.labelxy), (self.general_label, self.general_labelxy), (self.controls_label, self.controls_labelxy)]
+        self.labels = [(self.title, self.titlexy), (self.general_label, self.general_labelxy), (self.controls_label, self.controls_labelxy)]
         self.all = [self.difficulty, self.fps, self.music]
 
     def create_control_labels(self):
@@ -547,7 +547,7 @@ class Settings(Menu):
 
     def yspacing(self, order):
         h = self.general_label.get_height()
-        return (self.general_labelxy[1] + h) + ((h+30) * order)
+        return (self.general_labelxy[1] + h) + ((h+10) * order)
 
     def display(self):
         super().display()
@@ -601,12 +601,12 @@ class Settings(Menu):
 class Credits(Menu):
     def __init__(self, app) -> None:
         super().__init__(app)
-        self.label = title_font.render("CREDITS", 1, (255,255,255))
-        self.labelxy = (WIDTH/2 - self.label.get_width()/2, self.label.get_height()/2)
+        self.title = title_font.render("CREDITS", 1, (255,255,255))
+        self.titlexy = (WIDTH/2 - self.title.get_width()/2, self.title.get_height()/2)
         self.text = self.read_text()
-        self.textxy = [150, self.label.get_height()*2]
+        self.textxy = [150, self.title.get_height()*2]
         self.buttons = [self.menu_button]
-        self.labels = [(self.label, self.labelxy)]
+        self.labels = [(self.title, self.titlexy)]
 
     def read_text(self):
         with open('MusicRights.txt', 'r') as txt:

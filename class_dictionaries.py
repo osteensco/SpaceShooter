@@ -119,8 +119,8 @@ CONTROL_SETTINGS_DEFAULT = {
 }
 
 FPS_SETTINGS = {
-    'high': 90,
-    'low': 60
+    'high': 60,
+    'low': 40
 }
 
 MUSIC_SETTINGS = {
