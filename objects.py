@@ -513,6 +513,8 @@ class BossLaser(Laser):
             if self.armed:
                 self.exploding = True
                 self.armed = False
+            if type(obj).__name__ == "Laser":
+                return True
             if self.shooter.weapon != "shotgun":
                 if not obj.immune:
                     for i in range(0, random.randint(10, 20)):
@@ -661,7 +663,9 @@ class Ship:
             if laser.off_screen(HEIGHT, WIDTH):
                 self.lasers.remove(laser)
             elif laser.collision(obj):
-                if not obj.immune and type(obj).__name__ != "Boss":
+                if type(obj).__name__ == "BossLaser":
+                    return
+                elif not obj.immune and type(obj).__name__ != "Boss":
                     obj.health -= self.power
                 elif not obj.immune and type(obj).__name__ == "Boss":
                     obj.health -= obj.max_health/10

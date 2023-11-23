@@ -349,6 +349,10 @@ class GameSession:
                             enemy.drop_(0,0,0)
             for enemy in self.enemies:                    
                 enemy.move(enemy.vel, enparmove, set_FPS)#move method
+                if type(enemy).__name__ == "Boss":
+                    for plyrlsr in self.player.lasers:
+                        for laser in enemy.lasers:
+                            laser.collision(plyrlsr)
                 if type(enemy).__name__ != "Ship":
                     enemy.move_lasers(self.player)#move lasers after being shot method
                 else:
